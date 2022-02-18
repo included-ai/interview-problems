@@ -2,10 +2,10 @@ public final class Employee
 {
 
     private final String name;
-    private final int startYear;
+    private final Integer startYear;
 
 
-    public Employee( final String name, final int startYear )
+    public Employee( final String name, final Integer startYear )
     {
         this.name = name;
         this.startYear = startYear;
@@ -18,7 +18,7 @@ public final class Employee
     }
 
 
-    public int startYear()
+    public Integer startYear()
     {
         return this.startYear;
     }

@@ -1,5 +1,4 @@
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 
 public class Main
@@ -13,12 +12,22 @@ public class Main
     
     public void run()
     {
-        final List<Employee> allEmployees = new Employees().allEmployees();
+        var company = new Company
+        (
+            List.of
+            (
+                new Employee( "Mary", 2015 ),
+                new Employee( "Bob", null ),
+                new Employee( "Emily", 2016 ),
+                new Employee( "John", 2014 ),
+                new Employee( "Lee", 2021 )
+            )
+        );
         
-        final Employee employee1 = findEmployeeWithName( allEmployees, "Emily" );
-        final Employee employee2 = findEmployeeWithName( allEmployees, "Bob" );
-        final Employee employee3 = findEmployeeWithName( allEmployees, "Darek" );        
-        final Employee employee4 = findEmployeeWithName( allEmployees, "Lee" );
+        final Employee employee1 = company.findByName( "Emily" );
+        final Employee employee2 = company.findByName( "Bob" );
+        final Employee employee3 = company.findByName( "Darek" );
+        final Employee employee4 = company.findByName( "Lee" );
         
         final List<Employee> selectedEmployees = new ArrayList<>();
         addEmployeeToList( employee1, selectedEmployees );
@@ -27,24 +36,17 @@ public class Main
         addEmployeeToList( employee4, selectedEmployees );
         
         final Employee mostExperiencedEmployeeFromSelected = findMostExperiencedEmployee( selectedEmployees );
-        
-        final String expectedMostExperiencedEmployeeName = "Emily";
-        final int expectedMostExperiencedEmployeeStartYear = 2016;
-        
-        if( ! expectedMostExperiencedEmployeeName.equals( mostExperiencedEmployeeFromSelected.name() )
-            || expectedMostExperiencedEmployeeStartYear != mostExperiencedEmployeeFromSelected.startYear() )
-        {
+        assertEquals( new Employee( "Emily", 2016 ), mostExperiencedEmployeeFromSelected );
 
-            throw new RuntimeException
-            (
-                String.format
-                (
-                    "Expected most experienced employee is '%s' with start year '%d'.",
-                    expectedMostExperiencedEmployeeName,
-                    expectedMostExperiencedEmployeeStartYear
-                )
-            );
-        }
+        var company2 = new Company( Collections.emptyList() );
+        var companiesRatings = new HashMap<Company, Integer>();
+        companiesRatings.put( company, 5 );
+        companiesRatings.put( company2, 4 );
+
+        company2.addEmployee( new Employee( "Jane", 2022 ) );
+        assertEquals( 1, company2.allEmployees().size() );
+
+        assertEquals( 4, companiesRatings.get( company2 ) );
         
         System.out.println( "Task completed!" );
     }
@@ -56,36 +58,17 @@ public class Main
     }
     
     
-    private Employee findEmployeeWithName( final List<Employee> employees, final String requiredName )
-    {
-        for( int i = 0; i <= employees.size(); i++ )
-        {
-            final Employee employee = employees.get( i );
-            
-            if( employee.name().equals( requiredName ) )
-            {
-                return employee;
-            }
-        }
-        
-        return null;
-    }
-    
-    
     private Employee findMostExperiencedEmployee( final List<Employee> employees )
     {
-        Employee mostExperienced = null;
-        
-        for( int i = 0; i <= employees.size(); i++ )
+        return employees.stream().max( Comparator.comparing( Employee::startYear ) ).orElse( null );
+    }
+
+
+    public static void assertEquals( Object expected, Object actual )
+    {
+        if( ! Objects.equals( expected, actual ) )
         {
-            final Employee employee = employees.get( i );
-            
-            if( mostExperienced == null || mostExperienced.startYear() < employee.startYear() )
-            {
-                mostExperienced = employee;
-            }
+            throw new IllegalArgumentException( "Expected: " + expected + " but got: " + actual );
         }
-        
-        return mostExperienced;
     }
 }
