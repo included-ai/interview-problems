@@ -1,0 +1,85 @@
+html,
+body,
+#root
+{
+    height: 100%;
+}
+
+body
+{
+    margin: 0;
+    font-family: sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.app
+{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 auto;
+}
+
+.main
+{
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    margin-top: 2rem;
+    padding: 1rem;
+    background-color: #F2F2F2;
+    border: 1px solid #EEE;
+}
+
+.users-container,
+.groups-container
+{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: 1rem;
+    background-color: #FFF;
+    border: 1px solid #DDD;
+}
+
+.users-container
+{
+    width: 350px;
+}
+
+.groups-container
+{
+    margin-left: 2rem;
+    width: 200px;
+}
+
+.title
+{
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.user-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+li {
+    margin: 2px 0;
+    display: flex;
+    flex-direction: row;
+}
+
+.label
+{
+    color: #AAA;
+    margin-right: .25rem;
+}
+
+.label + .label
+{
+    margin-left: .35rem;
+}
